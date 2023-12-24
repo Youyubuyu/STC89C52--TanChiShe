@@ -1,0 +1,270 @@
+C51 COMPILER V9.54   MAIN                                                                  12/24/2023 14:18:23 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.l
+                    -st) TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include <stdlib.h>
+   3          #include "Delay.h"
+   4          #include "MatrixLED.h"
+   5          #include "MatrixKey.h"
+   6          #include "Timer0.h"
+   7          
+   8          unsigned char Direction,Length,KeyNum,Speed;
+   9          char Snake_x[32] = {0};//蛇身x坐标,理想状态是64，但单片机RAM不够，所以少设一些
+  10          char Snake_y[32] = {0};//蛇身y坐标
+  11          unsigned char code x[] = {0x7f,0xbf,0xdf,0xef,0xf7,0xfb,0xfd,0xfe};
+  12          unsigned char code y[] = {0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
+  13          unsigned char Food_x;//食物x坐标
+  14          unsigned char Food_y;//食物y坐标
+  15          
+  16          
+  17          unsigned char Independent_Key() //四个独立按键选择模式
+  18          {
+  19   1        static unsigned char KeyNumber_0;
+  20   1        if(P3_1==0){KeyNumber_0=1;} //简单模式
+  21   1        if(P3_0==0){KeyNumber_0=2;} //普通模式
+  22   1        if(P3_2==0){KeyNumber_0=3;} //困难模式
+  23   1        if(P3_3==0){KeyNumber_0=4;} //娱乐模式
+  24   1        return KeyNumber_0;
+  25   1      }
+  26          
+  27          
+  28          void Snake_move()//蛇身移动
+  29          {
+  30   1        unsigned char i;
+  31   1        for (i = Length + 1; i > 0;i--)
+  32   1        {
+  33   2            Snake_x[i] = Snake_x[i - 1];//下一次的x坐标为上一次的x坐标，以实现向前挪动
+  34   2            Snake_y[i] = Snake_y[i - 1];//同上
+  35   2        }
+  36   1        switch(Direction)//方向：1:上2:下3:左4:右
+  37   1        {
+  38   2          case 1:(Snake_y[0])--;break;
+  39   2          case 2:(Snake_y[0])++;break;
+  40   2          case 3:(Snake_x[0])--;break;
+  41   2          case 4:(Snake_x[0])++;break;
+  42   2        }
+  43   1      }
+  44          
+  45          
+  46          void Direction_key()//检测方向键，控制方向
+  47          {
+  48   1        if(KeyNum)
+  49   1        {
+  50   2          switch(KeyNum){
+  51   3            case 1:if(Direction != 1)Direction = 2;break;//如果方向不是上，也就是方向为左或右，那么朝下
+  52   3            case 2:if(Direction != 2)Direction = 1;break;//同上
+  53   3            case 3:if(Direction != 3)Direction = 4;break;//同上
+  54   3            case 4:if(Direction != 4)Direction = 3;break;//同上
+C51 COMPILER V9.54   MAIN                                                                  12/24/2023 14:18:23 PAGE 2   
+
+  55   3          }     
+  56   2        }
+  57   1      }
+  58          
+  59          
+  60          void Food_coordinate()//食物坐标
+  61          { 
+  62   1        Food_x = rand() % 8;
+  63   1        Food_y = rand() % 8;
+  64   1      }
+  65          
+  66          
+  67          void Refresh() //刷新蛇和食物的位置
+  68          {
+  69   1        unsigned char i;
+  70   1        for(i = 0;i < Length;i++)
+  71   1          {
+  72   2            MatrixLED_Init();
+  73   2            MatrixLED_ShowColumn(x[Snake_x[i]],y[Snake_y[i]]);
+  74   2            MatrixLED_Init();
+  75   2            MatrixLED_ShowColumn(x[Food_x],y[Food_y]);
+  76   2          }
+  77   1      }
+  78          
+  79          
+  80          void Eat_food() //判断是否吃到食物
+  81          {
+  82   1        unsigned char i;
+  83   1        for(i = 0;i < Length;i++)
+  84   1        {
+  85   2          if(Food_x == Snake_x[i] && Food_y == Snake_y[i])
+  86   2          {
+  87   3            Length++;
+  88   3            Food_coordinate();
+  89   3          }
+  90   2        }
+  91   1      }
+  92          
+  93          
+  94          void Game_over() //游戏结束显示效果
+  95          {
+  96   1        unsigned char code Animation[] = {
+  97   1      0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+  98   1      0x7E,0x81,0x81,0x89,0x89,0x4E,0x00,0x1F,
+  99   1      0x68,0x88,0x68,0x1F,0x00,0xFF,0x40,0x20,
+ 100   1      0x20,0x40,0xFF,0x00,0xFF,0x91,0x91,0x91,
+ 101   1      0x91,0x00,0x00,0x7E,0x81,0x81,0x81,0x81,
+ 102   1      0x7E,0x00,0xF0,0x0E,0x01,0x0E,0xF0,0x00,
+ 103   1      0xFF,0x91,0x91,0x91,0x91,0x00,0x7F,0x88,
+ 104   1      0x8C,0x8A,0x71,0x00,0x00,0x00,0x00,0xF2,
+ 105   1      0x97,0x92,0x02,0xF2,0x12,0x12,0x02,0xF2,
+ 106   1      0x02,0xF2,0x92,0x92,0x02,0xF2,0x42,0xB2,
+ 107   1      0x02,0x02,0x02,0xF2,0x02,0x82,0xF2,0x82,
+ 108   1      0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
+ 109   1      };
+ 110   1        unsigned char i,Offset = 0,Count = 0;
+ 111   1        MatrixLED_Init();
+ 112   1        while(1)
+ 113   1        {
+ 114   2          for(i = 0;i < 8;i++)
+ 115   2          {
+ 116   3            MatrixLED_Show_Gameover(i,Animation[i + Offset]);
+C51 COMPILER V9.54   MAIN                                                                  12/24/2023 14:18:23 PAGE 3   
+
+ 117   3          }
+ 118   2          Count++;
+ 119   2          if(Count > 4)
+ 120   2          {
+ 121   3            Count = 0;
+ 122   3            Offset++;
+ 123   3            if(Offset > 88)
+ 124   3            {
+ 125   4              Offset = 0;
+ 126   4            }
+ 127   3          }
+ 128   2        }
+ 129   1      }
+ 130          
+ 131          
+ 132          void Snake_death() //判断死亡
+ 133          {
+ 134   1        
+ 135   1        //撞自己
+ 136   1        unsigned char i;
+ 137   1        for(i = 4;i < Length;i++)
+ 138   1        {
+ 139   2          if(Snake_x[0] == Snake_x[i] && Snake_y[0] == Snake_y[i])
+ 140   2          {     
+ 141   3            Game_over();
+ 142   3          }
+ 143   2        }
+ 144   1        
+ 145   1        //撞墙
+ 146   1          if(Snake_x[0] < 0 || Snake_x[0] > 7 || Snake_y[0] < 0 || Snake_y[0] > 7)
+ 147   1          {
+ 148   2            Game_over();
+ 149   2          }
+ 150   1      }
+ 151          
+ 152          
+ 153          void main()
+ 154          {
+ 155   1        Length = 2;
+ 156   1        Direction = 4;
+ 157   1        while(Independent_Key()==1) //简单模式
+ 158   1        {
+ 159   2            Timer0_Init();
+ 160   2            Speed=200;
+ 161   2            rand();
+ 162   2            KeyNum=Key();
+ 163   2            Direction_key();
+ 164   2            MatrixLED_Init();
+ 165   2            Refresh();
+ 166   2            Eat_food();
+ 167   2            Snake_death();
+ 168   2        }
+ 169   1        while(Independent_Key()==2) //普通模式
+ 170   1        {
+ 171   2            Timer0_Init();
+ 172   2            Speed=150;
+ 173   2            rand();
+ 174   2            KeyNum=Key();
+ 175   2            Direction_key();
+ 176   2            MatrixLED_Init();
+ 177   2            Refresh();
+ 178   2            Eat_food();
+C51 COMPILER V9.54   MAIN                                                                  12/24/2023 14:18:23 PAGE 4   
+
+ 179   2            Snake_death();
+ 180   2        }
+ 181   1        while(Independent_Key()==3) //困难模式
+ 182   1        {
+ 183   2            Timer0_Init();
+ 184   2            Speed=100;
+ 185   2            rand();
+ 186   2            KeyNum=Key();
+ 187   2            Direction_key();
+ 188   2            MatrixLED_Init();
+ 189   2            Refresh();
+ 190   2            Eat_food();
+ 191   2            Snake_death();
+ 192   2        }
+ 193   1        while(Independent_Key()==4) //娱乐模式
+ 194   1        {
+ 195   2            Timer0_Init();
+ 196   2            Speed=150;
+ 197   2            rand();
+ 198   2            KeyNum=Key();
+ 199   2            Direction_key();
+ 200   2            MatrixLED_Init();
+ 201   2            Refresh();
+ 202   2            Eat_food();
+ 203   2            Snake_death();
+ 204   2        }
+ 205   1      }
+ 206          
+ 207          
+ 208          void Routine_Timer0() interrupt 1
+ 209          {
+ 210   1        static unsigned int T0_Count1,T0_Count2,T0_Count3;
+ 211   1        TL0 = 0x18;   
+ 212   1        TH0 = 0xFC;     
+ 213   1        //刷新按键
+ 214   1        T0_Count1++;
+ 215   1        if(T0_Count1 == 50)
+ 216   1        {
+ 217   2          T0_Count1 = 0;
+ 218   2          Circulate_MatrixKey();
+ 219   2        }
+ 220   1        //蛇移动的刷新速度
+ 221   1        T0_Count2++;
+ 222   1        if(T0_Count2 == Speed)
+ 223   1        { 
+ 224   2          T0_Count2 = 0;
+ 225   2          Snake_move();
+ 226   2        }
+ 227   1        //娱乐模式食物刷新
+ 228   1        if(Independent_Key() == 4)
+ 229   1        {
+ 230   2          T0_Count3++;
+ 231   2          if(T0_Count3 == 5000)
+ 232   2          {
+ 233   3            T0_Count3 = 0;    
+ 234   3            Food_coordinate();
+ 235   3            MatrixLED_ShowColumn(x[Food_x],y[Food_y]);    
+ 236   3          }
+ 237   2        }
+ 238   1      }
+
+
+C51 COMPILER V9.54   MAIN                                                                  12/24/2023 14:18:23 PAGE 5   
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    755    ----
+   CONSTANT SIZE    =    112    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     77       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
