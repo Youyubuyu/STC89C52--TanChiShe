@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MATRIXLED                                                             12/23/2023 19:50:40 PAGE 1   
+C51 COMPILER V9.54   MATRIXLED                                                             12/25/2023 21:32:13 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MATRIXLED
@@ -55,20 +55,21 @@ line level    source
   45          void MatrixLED_ShowColumn(unsigned char Column, Data)
   46          {
   47   1        _74HC595_WriteByte(Data);
-  48   1        MATRIX_LED_PORT=(Column);
+  48   1        MATRIX_LED_PORT=~(0x80>>Column);
   49   1        Delay(1);
   50   1        MATRIX_LED_PORT=0xFF;
   51   1      }
   52          
-  53          void MatrixLED_Show_Gameover(unsigned char Column, Data)
-  54          {
-C51 COMPILER V9.54   MATRIXLED                                                             12/23/2023 19:50:40 PAGE 2   
+  53          
+  54          void MatrixLED_ShowMove(unsigned char Column, Data)
+C51 COMPILER V9.54   MATRIXLED                                                             12/25/2023 21:32:13 PAGE 2   
 
-  55   1        _74HC595_WriteByte(Data);
-  56   1        MATRIX_LED_PORT=~(0x80>>Column);
-  57   1        Delay(1);
-  58   1        MATRIX_LED_PORT=0xFF;
-  59   1      }
+  55          {
+  56   1        _74HC595_WriteByte(Data);
+  57   1        MATRIX_LED_PORT=(Column);
+  58   1        Delay(1);
+  59   1        MATRIX_LED_PORT=0xFF;
+  60   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

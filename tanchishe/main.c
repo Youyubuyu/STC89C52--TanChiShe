@@ -69,7 +69,7 @@ void welcome()
 		{
 			for(i = 0;i < 8;i++)
 			{
-				MatrixLED_Show_Gameover(i,welcome[i + Offset]);
+				MatrixLED_ShowColumn(i,welcome[i + Offset]);
 			}
 			Count++;
 			if(Count > 8)
@@ -135,9 +135,9 @@ void Refresh() //刷新蛇和食物的位置
 	for(i = 0;i < Length;i++)
 		{
 			MatrixLED_Init();
-			MatrixLED_ShowColumn(x[Snake_x[i]],y[Snake_y[i]]);
+			MatrixLED_ShowMove(x[Snake_x[i]],y[Snake_y[i]]);
 			MatrixLED_Init();
-			MatrixLED_ShowColumn(x[Food_x],y[Food_y]);
+			MatrixLED_ShowMove(x[Food_x],y[Food_y]);
 		}
 }
 
@@ -179,7 +179,7 @@ void Game_over() //游戏结束显示效果
 	{
 		for(i = 0;i < 8;i++)
 		{
-			MatrixLED_Show_Gameover(i,Animation[i + Offset]);
+			MatrixLED_ShowColumn(i,Animation[i + Offset]);
 		}
 		Count++;
 		if(Count > 4)
@@ -309,7 +309,7 @@ void Routine_Timer0() interrupt 1
 			{
 				T0_Count3 = 0;		
 				Food_coordinate();
-				MatrixLED_ShowColumn(x[Food_x],y[Food_y]);		
+				MatrixLED_ShowMove(x[Food_x],y[Food_y]);		
 			}
 		}
 	}	

@@ -45,15 +45,16 @@ void MatrixLED_Init()
 void MatrixLED_ShowColumn(unsigned char Column, Data)
 {
 	_74HC595_WriteByte(Data);
-	MATRIX_LED_PORT=(Column);
+	MATRIX_LED_PORT=~(0x80>>Column);
 	Delay(1);
 	MATRIX_LED_PORT=0xFF;
 }
 
-void MatrixLED_Show_Gameover(unsigned char Column, Data)
+
+void MatrixLED_ShowMove(unsigned char Column, Data)
 {
 	_74HC595_WriteByte(Data);
-	MATRIX_LED_PORT=~(0x80>>Column);
+	MATRIX_LED_PORT=(Column);
 	Delay(1);
 	MATRIX_LED_PORT=0xFF;
 }

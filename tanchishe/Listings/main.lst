@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MAIN                                                                  12/25/2023 13:09:51 PAGE 1   
+C51 COMPILER V9.54   MAIN                                                                  12/25/2023 21:32:13 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   52   1      0x40,0x20,0x1F,0x20,0x40,0x00,0x22,0x00,
   53   1      0x22,0x41,0x49,0x49,0x36,0x00,0xFF,0x00,
   54   1      0x7F,0x49,0x49,0x41,0x00,0x7F,0x20,0x1C,
-C51 COMPILER V9.54   MAIN                                                                  12/25/2023 13:09:51 PAGE 2   
+C51 COMPILER V9.54   MAIN                                                                  12/25/2023 21:32:13 PAGE 2   
 
   55   1      0x02,0x7F,0x00,0x40,0x40,0x7F,0x40,0x40,
   56   1      0x00,0x7F,0x49,0x49,0x41,0x00,0x7F,0x48,
@@ -81,7 +81,7 @@ line level    source
   69   2          {
   70   3            for(i = 0;i < 8;i++)
   71   3            {
-  72   4              MatrixLED_Show_Gameover(i,welcome[i + Offset]);
+  72   4              MatrixLED_ShowColumn(i,welcome[i + Offset]);
   73   4            }
   74   3            Count++;
   75   3            if(Count > 8)
@@ -126,7 +126,7 @@ line level    source
  114   1        {
  115   2          switch(KeyNum){
  116   3            case 1:if(Direction != 1)Direction = 2;break;//如果方向不是上，也就是方向为左或右，那么朝下
-C51 COMPILER V9.54   MAIN                                                                  12/25/2023 13:09:51 PAGE 3   
+C51 COMPILER V9.54   MAIN                                                                  12/25/2023 21:32:13 PAGE 3   
 
  117   3            case 2:if(Direction != 2)Direction = 1;break;//同上
  118   3            case 3:if(Direction != 3)Direction = 4;break;//同上
@@ -149,9 +149,9 @@ line level    source
  135   1        for(i = 0;i < Length;i++)
  136   1          {
  137   2            MatrixLED_Init();
- 138   2            MatrixLED_ShowColumn(x[Snake_x[i]],y[Snake_y[i]]);
+ 138   2            MatrixLED_ShowMove(x[Snake_x[i]],y[Snake_y[i]]);
  139   2            MatrixLED_Init();
- 140   2            MatrixLED_ShowColumn(x[Food_x],y[Food_y]);
+ 140   2            MatrixLED_ShowMove(x[Food_x],y[Food_y]);
  141   2          }
  142   1      }
  143          
@@ -190,12 +190,12 @@ line level    source
  176   1        unsigned char i,Offset = 0,Count = 0;
  177   1        MatrixLED_Init();
  178   1        while(1)
-C51 COMPILER V9.54   MAIN                                                                  12/25/2023 13:09:51 PAGE 4   
+C51 COMPILER V9.54   MAIN                                                                  12/25/2023 21:32:13 PAGE 4   
 
  179   1        {
  180   2          for(i = 0;i < 8;i++)
  181   2          {
- 182   3            MatrixLED_Show_Gameover(i,Animation[i + Offset]);
+ 182   3            MatrixLED_ShowColumn(i,Animation[i + Offset]);
  183   3          }
  184   2          Count++;
  185   2          if(Count > 4)
@@ -254,7 +254,7 @@ line level    source
  238   2            rand();
  239   2            KeyNum = Key();
  240   2            Direction_key();
-C51 COMPILER V9.54   MAIN                                                                  12/25/2023 13:09:51 PAGE 5   
+C51 COMPILER V9.54   MAIN                                                                  12/25/2023 21:32:13 PAGE 5   
 
  241   2            MatrixLED_Init();
  242   2            Refresh();
@@ -318,7 +318,7 @@ line level    source
  300   1          { 
  301   2            T0_Count2 = 0;
  302   2            Snake_move();
-C51 COMPILER V9.54   MAIN                                                                  12/25/2023 13:09:51 PAGE 6   
+C51 COMPILER V9.54   MAIN                                                                  12/25/2023 21:32:13 PAGE 6   
 
  303   2          }
  304   1          //娱乐模式食物刷新
@@ -329,7 +329,7 @@ line level    source
  309   2            {
  310   3              T0_Count3 = 0;    
  311   3              Food_coordinate();
- 312   3              MatrixLED_ShowColumn(x[Food_x],y[Food_y]);    
+ 312   3              MatrixLED_ShowMove(x[Food_x],y[Food_y]);    
  313   3            }
  314   2          }
  315   1        } 

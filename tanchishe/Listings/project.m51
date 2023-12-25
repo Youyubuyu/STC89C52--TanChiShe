@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        12/25/2023  13:09:51  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        12/25/2023  21:32:13  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -57,16 +57,16 @@ LINK MAP OF MODULE:  .\Objects\project (MAIN)
             CODE    06AAH     002DH     UNIT         ?PR?__74HC595_WRITEBYTE?MATRIXLED
             CODE    06D7H     0028H     UNIT         ?PR?EAT_FOOD?MAIN
             CODE    06FFH     0026H     UNIT         ?PR?MATRIXKEY?MATRIXKEY
-            CODE    0725H     0022H     UNIT         ?PR?_MATRIXLED_SHOW_GAMEOVER?MATRIXLED
+            CODE    0725H     0022H     UNIT         ?PR?_MATRIXLED_SHOWCOLUMN?MATRIXLED
             CODE    0747H     0021H     UNIT         ?C_INITSEG
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  13:09:51  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  21:32:13  PAGE 2
 
 
             CODE    0768H     001BH     UNIT         ?PR?INDEPENDENT_KEY?MAIN
             CODE    0783H     0019H     UNIT         ?PR?FOOD_COORDINATE?MAIN
             CODE    079CH     0017H     UNIT         ?PR?TIMER0_INIT?TIMER0
             CODE    07B3H     0015H     UNIT         ?PR?_DELAY?DELAY
-            CODE    07C8H     0014H     UNIT         ?PR?_MATRIXLED_SHOWCOLUMN?MATRIXLED
+            CODE    07C8H     0014H     UNIT         ?PR?_MATRIXLED_SHOWMOVE?MATRIXLED
             CODE    07DCH     0005H     UNIT         ?PR?MATRIXLED_INIT?MATRIXLED
 
 
@@ -74,34 +74,34 @@ LINK MAP OF MODULE:  .\Objects\project (MAIN)
 OVERLAY MAP OF MODULE:   .\Objects\project (MAIN)
 
 
-SEGMENT                                          DATA_GROUP 
-  +--> CALLED SEGMENT                          START    LENGTH
---------------------------------------------------------------
-?PR?ROUTINE_TIMER0?MAIN                        -----    -----
+SEGMENT                                       DATA_GROUP 
+  +--> CALLED SEGMENT                       START    LENGTH
+-----------------------------------------------------------
+?PR?ROUTINE_TIMER0?MAIN                     -----    -----
   +--> ?PR?CIRCULATE_MATRIXKEY?MATRIXKEY
   +--> ?PR?SNAKE_MOVE?MAIN
   +--> ?PR?INDEPENDENT_KEY?MAIN
   +--> ?PR?FOOD_COORDINATE?MAIN
   +--> ?CO?MAIN
-  +--> ?PR?_MATRIXLED_SHOWCOLUMN?MATRIXLED
+  +--> ?PR?_MATRIXLED_SHOWMOVE?MATRIXLED
 
-?PR?CIRCULATE_MATRIXKEY?MATRIXKEY              -----    -----
+?PR?CIRCULATE_MATRIXKEY?MATRIXKEY           -----    -----
   +--> ?PR?MATRIXKEY?MATRIXKEY
 
-?PR?FOOD_COORDINATE?MAIN                       -----    -----
+?PR?FOOD_COORDINATE?MAIN                    -----    -----
   +--> ?PR?RAND?RAND
 
-?PR?_MATRIXLED_SHOWCOLUMN?MATRIXLED            -----    -----
+?PR?_MATRIXLED_SHOWMOVE?MATRIXLED           -----    -----
   +--> ?PR?__74HC595_WRITEBYTE?MATRIXLED
   +--> ?PR?_DELAY?DELAY
 
 *** NEW ROOT ***************************************************
 
-?C_C51STARTUP                                  -----    -----
+?C_C51STARTUP                               -----    -----
   +--> ?PR?MAIN?MAIN
   +--> ?C_INITSEG
 
-?PR?MAIN?MAIN                                  -----    -----
+?PR?MAIN?MAIN                               -----    -----
   +--> ?PR?WELCOME?MAIN
   +--> ?PR?INDEPENDENT_KEY?MAIN
   +--> ?PR?TIMER0_INIT?TIMER0
@@ -113,34 +113,34 @@ SEGMENT                                          DATA_GROUP
   +--> ?PR?EAT_FOOD?MAIN
   +--> ?PR?SNAKE_DEATH?MAIN
 
-?PR?WELCOME?MAIN                               0030H    0003H
-  +--> ?PR?MATRIXLED_INIT?MATRIXLED
-  +--> ?CO?MAIN
-  +--> ?PR?_MATRIXLED_SHOW_GAMEOVER?MATRIXLED
-  +--> ?PR?INDEPENDENT_KEY?MAIN
-
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  13:09:51  PAGE 3
-
-
-?PR?_MATRIXLED_SHOW_GAMEOVER?MATRIXLED         -----    -----
-  +--> ?PR?__74HC595_WRITEBYTE?MATRIXLED
-  +--> ?PR?_DELAY?DELAY
-
-?PR?REFRESH?MAIN                               0030H    0001H
+?PR?WELCOME?MAIN                            0030H    0003H
   +--> ?PR?MATRIXLED_INIT?MATRIXLED
   +--> ?CO?MAIN
   +--> ?PR?_MATRIXLED_SHOWCOLUMN?MATRIXLED
+  +--> ?PR?INDEPENDENT_KEY?MAIN
 
-?PR?EAT_FOOD?MAIN                              0030H    0001H
-  +--> ?PR?FOOD_COORDINATE?MAIN
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  21:32:13  PAGE 3
 
-?PR?SNAKE_DEATH?MAIN                           0030H    0001H
-  +--> ?PR?GAME_OVER?MAIN
 
-?PR?GAME_OVER?MAIN                             0031H    0003H
+?PR?_MATRIXLED_SHOWCOLUMN?MATRIXLED         -----    -----
+  +--> ?PR?__74HC595_WRITEBYTE?MATRIXLED
+  +--> ?PR?_DELAY?DELAY
+
+?PR?REFRESH?MAIN                            0030H    0001H
   +--> ?PR?MATRIXLED_INIT?MATRIXLED
   +--> ?CO?MAIN
-  +--> ?PR?_MATRIXLED_SHOW_GAMEOVER?MATRIXLED
+  +--> ?PR?_MATRIXLED_SHOWMOVE?MATRIXLED
+
+?PR?EAT_FOOD?MAIN                           0030H    0001H
+  +--> ?PR?FOOD_COORDINATE?MAIN
+
+?PR?SNAKE_DEATH?MAIN                        0030H    0001H
+  +--> ?PR?GAME_OVER?MAIN
+
+?PR?GAME_OVER?MAIN                          0031H    0003H
+  +--> ?PR?MATRIXLED_INIT?MATRIXLED
+  +--> ?CO?MAIN
+  +--> ?PR?_MATRIXLED_SHOWCOLUMN?MATRIXLED
 
 
 
@@ -179,7 +179,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   C:0637H         PUBLIC        Direction_key
   C:0501H         PUBLIC        Refresh
   D:0027H         PUBLIC        KeyNum
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  13:09:51  PAGE 4
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  21:32:13  PAGE 4
 
 
   C:05ABH         PUBLIC        Snake_death
@@ -239,7 +239,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   C:0500H         LINE#         89
   C:0500H         LINE#         90
   -------         ENDPROC       WELCOME
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  13:09:51  PAGE 5
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  21:32:13  PAGE 5
 
 
   -------         PROC          SNAKE_MOVE
@@ -299,7 +299,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   C:055DH         LINE#         142
   -------         ENDPROC       REFRESH
   -------         PROC          EAT_FOOD
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  13:09:51  PAGE 6
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  21:32:13  PAGE 6
 
 
   -------         DO            
@@ -359,7 +359,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   -------         PROC          SNAKE_DEATH
   -------         DO            
   D:0030H         SYMBOL        i
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  13:09:51  PAGE 7
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  21:32:13  PAGE 7
 
 
   -------         ENDDO         
@@ -419,7 +419,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   C:02ACH         LINE#         265
   C:02AFH         LINE#         266
   C:02B2H         LINE#         267
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  13:09:51  PAGE 8
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  21:32:13  PAGE 8
 
 
   C:02B5H         LINE#         268
@@ -478,15 +478,15 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   D:0080H         PUBLIC        P0
   C:06AAH         PUBLIC        __74HC595_WriteByte
   D:00B0H         PUBLIC        P3
-  C:07C8H         PUBLIC        _MatrixLED_ShowColumn
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  13:09:51  PAGE 9
+  C:0725H         PUBLIC        _MatrixLED_ShowColumn
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  21:32:13  PAGE 9
 
 
   C:07DCH         PUBLIC        MatrixLED_Init
   B:00B0H.5       PUBLIC        RCK
   B:00B0H.6       PUBLIC        SCK
   B:00B0H.4       PUBLIC        SER
-  C:0725H         PUBLIC        _MatrixLED_Show_Gameover
+  C:07C8H         PUBLIC        _MatrixLED_ShowMove
   -------         PROC          __74HC595_WRITEBYTE
   D:0005H         SYMBOL        Byte
   -------         DO            
@@ -514,32 +514,32 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   -------         PROC          _MATRIXLED_SHOWCOLUMN
   D:0002H         SYMBOL        Column
   D:0004H         SYMBOL        Data
-  C:07C8H         LINE#         45
-  C:07CAH         LINE#         46
-  C:07CAH         LINE#         47
-  C:07CFH         LINE#         48
-  C:07D1H         LINE#         49
-  C:07D8H         LINE#         50
-  C:07DBH         LINE#         51
+  C:0725H         LINE#         45
+  C:0727H         LINE#         46
+  C:0727H         LINE#         47
+  C:072CH         LINE#         48
+  C:073CH         LINE#         49
+  C:0743H         LINE#         50
+  C:0746H         LINE#         51
   -------         ENDPROC       _MATRIXLED_SHOWCOLUMN
-  -------         PROC          _MATRIXLED_SHOW_GAMEOVER
+  -------         PROC          _MATRIXLED_SHOWMOVE
   D:0002H         SYMBOL        Column
   D:0004H         SYMBOL        Data
-  C:0725H         LINE#         53
-  C:0727H         LINE#         54
-  C:0727H         LINE#         55
-  C:072CH         LINE#         56
-  C:073CH         LINE#         57
-  C:0743H         LINE#         58
-  C:0746H         LINE#         59
-  -------         ENDPROC       _MATRIXLED_SHOW_GAMEOVER
+  C:07C8H         LINE#         54
+  C:07CAH         LINE#         55
+  C:07CAH         LINE#         56
+  C:07CFH         LINE#         57
+  C:07D1H         LINE#         58
+  C:07D8H         LINE#         59
+  C:07DBH         LINE#         60
+  -------         ENDPROC       _MATRIXLED_SHOWMOVE
   -------         ENDMOD        MATRIXLED
 
   -------         MODULE        DELAY
   C:0000H         SYMBOL        _ICE_DUMMY_
   C:07B3H         PUBLIC        _Delay
   -------         PROC          _DELAY
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  13:09:51  PAGE 10
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  21:32:13  PAGE 10
 
 
   D:0006H         SYMBOL        xms
@@ -599,7 +599,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   C:070EH         LINE#         28
   C:0710H         LINE#         29
   C:0715H         LINE#         30
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  13:09:51  PAGE 11
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  21:32:13  PAGE 11
 
 
   C:071AH         LINE#         32
@@ -659,7 +659,7 @@ SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
   -------         MODULE        RAND
   D:002CH         PUBLIC        ?SRAND?BYTE
   C:055EH         PUBLIC        RAND
-BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  13:09:51  PAGE 12
+BL51 BANKED LINKER/LOCATER V6.22                                                      12/25/2023  21:32:13  PAGE 12
 
 
   C:05A0H         PUBLIC        _SRAND
