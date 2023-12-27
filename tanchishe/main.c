@@ -125,7 +125,8 @@ void Direction_key()//检测方向键，控制方向
 void Food_coordinate()//食物坐标
 {	
 	Food_x = rand() % 8;
-	Food_y = rand() % 8;
+	Food_y = rand() % 8;0
+	
 }
 
 
@@ -144,12 +145,16 @@ void Refresh() //刷新蛇和食物的位置
 
 void Eat_food() //判断是否吃到食物
 {	
-	if(Snake_x[0] == Food_x && Snake_y[0] == Food_y)
+unsigned char i;
+	for(i = 0;i < Length;i++)
 	{
-		Length++;
-		Food_coordinate();
-		Score++;
-	}	
+		if(Snake_x[i] == Food_x && Snake_y[i] == Food_y)
+		{
+			Length++;
+			Food_coordinate();
+			Score++;
+		}	
+	}
 }
 
 
