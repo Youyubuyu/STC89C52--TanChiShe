@@ -6,8 +6,8 @@
 #include "Timer0.h"
 
 unsigned char Direction,Length,KeyNum,Speed,Score;
-char Snake_x[11] = {0};//蛇身x坐标,理想状态是64，但单片机RAM不够，所以少设一些
-char Snake_y[11] = {0};//蛇身y坐标
+char Snake_x[16] = {0};//蛇身x坐标,理想状态是64，但单片机RAM不够，所以少设一些
+char Snake_y[16] = {0};//蛇身y坐标
 unsigned char code x[] = {0x7f,0xbf,0xdf,0xef,0xf7,0xfb,0xfd,0xfe};
 unsigned char code y[] = {0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
 unsigned char Food_x;//食物x坐标
@@ -61,7 +61,7 @@ void welcome()
 0x00,0x7F,0x49,0x49,0x41,0x00,0x7F,0x20,
 0x1C,0x02,0x7F,0x00,0x40,0x40,0x7F,0x40,
 0x40,0x00,0x22,0x00,0x0C,0x34,0x7F,0x04
-};
+}; //SIMPLE：1|ORDINARY：2|DIFFICULTY：3|ENTERTAINMENT：4
 	unsigned char i,Offset = 0,Count = 0;
 	MatrixLED_Init();	
 	while(1)	
@@ -136,24 +136,20 @@ void Refresh() //刷新蛇和食物的位置
 		{
 			MatrixLED_Init();
 			MatrixLED_ShowMove(x[Snake_x[i]],y[Snake_y[i]]);
+		}
 			MatrixLED_Init();
 			MatrixLED_ShowMove(x[Food_x],y[Food_y]);
-		}
 }
 
 
 void Eat_food() //判断是否吃到食物
-{
-	unsigned char i;
-	for(i = 0;i < Length;i++)
+{	
+	if(Snake_x[0] == Food_x && Snake_y[0] == Food_y)
 	{
-		if(Food_x == Snake_x[i] && Food_y == Snake_y[i])
-		{
-			Length++;
-			Food_coordinate();
-			Score++;
-		}
-	}
+		Length++;
+		Food_coordinate();
+		Score++;
+	}	
 }
 
 
@@ -172,7 +168,7 @@ void Game_over() //游戏结束显示效果
 0x02,0xF2,0x92,0x92,0x02,0xF2,0x42,0xB2,
 0x02,0x02,0x02,0xF2,0x02,0x82,0xF2,0x82,
 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
-};
+}; //GAME OVER
 	unsigned char i,Offset = 0,Count = 0;
 	MatrixLED_Init();
 	while(1)
@@ -199,7 +195,7 @@ void Game_over() //游戏结束显示效果
 		if(Score == 5){P2_0 = 0;P2_1 = 0;P2_2 = 0;P2_3 = 0;P2_4 = 0;}
 		if(Score == 6){P2_0 = 0;P2_1 = 0;P2_2 = 0;P2_3 = 0;P2_4 = 0;P2_5 = 0;}
 		if(Score == 7){P2_0 = 0;P2_1 = 0;P2_2 = 0;P2_3 = 0;P2_4 = 0;P2_5 = 0;P2_6 = 0;}
-		if(Score == 8){P2_0 = 0;P2_1 = 0;P2_2 = 0;P2_3 = 0;P2_4 = 0;P2_5 = 0;P2_6 = 0;P2_7 = 0;}
+		if(Score >= 8){P2_0 = 0;P2_1 = 0;P2_2 = 0;P2_3 = 0;P2_4 = 0;P2_5 = 0;P2_6 = 0;P2_7 = 0;}
 	}		
 }
 
