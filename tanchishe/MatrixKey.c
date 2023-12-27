@@ -38,11 +38,10 @@ unsigned char MatrixKey()
 
 void Circulate_MatrixKey()
 {
-		static unsigned char Last_Key=0,Now_Key=0;
-		Last_Key=Now_Key;
+		static unsigned char Now_Key=0;		
 		Now_Key=MatrixKey();
-		if(Last_Key==0 && Now_Key==7){Key_KeyNumber=2;}//下
-		if(Last_Key==0 && Now_Key==15){Key_KeyNumber=1;}//上
-		if(Last_Key==0 && Now_Key==10){Key_KeyNumber=4;}//右
-		if(Last_Key==0 && Now_Key==12){Key_KeyNumber=3;}//左
+		if(Now_Key==7){Key_KeyNumber=2;}//下
+		if(Now_Key==15){Key_KeyNumber=1;}//上
+		if(Now_Key==10){Key_KeyNumber=4;}//右
+		if(Now_Key==12){Key_KeyNumber=3;}//左
 }

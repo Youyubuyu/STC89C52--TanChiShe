@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MATRIXKEY                                                             12/27/2023 14:25:56 PAGE 1   
+C51 COMPILER V9.54   MATRIXKEY                                                             12/27/2023 15:00:01 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MATRIXKEY
@@ -48,24 +48,23 @@ line level    source
   38          
   39          void Circulate_MatrixKey()
   40          {
-  41   1          static unsigned char Last_Key=0,Now_Key=0;
-  42   1          Last_Key=Now_Key;
-  43   1          Now_Key=MatrixKey();
-  44   1          if(Last_Key==0 && Now_Key==7){Key_KeyNumber=2;}//下
-  45   1          if(Last_Key==0 && Now_Key==15){Key_KeyNumber=1;}//上
-  46   1          if(Last_Key==0 && Now_Key==10){Key_KeyNumber=4;}//右
-  47   1          if(Last_Key==0 && Now_Key==12){Key_KeyNumber=3;}//左
-  48   1      }
+  41   1          static unsigned char Now_Key=0;   
+  42   1          Now_Key=MatrixKey();
+  43   1          if(Now_Key==7){Key_KeyNumber=2;}//下
+  44   1          if(Now_Key==15){Key_KeyNumber=1;}//上
+  45   1          if(Now_Key==10){Key_KeyNumber=4;}//右
+  46   1          if(Now_Key==12){Key_KeyNumber=3;}//左
+  47   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    101    ----
+   CODE SIZE        =     82    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
-C51 COMPILER V9.54   MATRIXKEY                                                             12/27/2023 14:25:56 PAGE 2   
-
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      3    ----
+C51 COMPILER V9.54   MATRIXKEY                                                             12/27/2023 15:00:01 PAGE 2   
+
+   DATA SIZE        =      2    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
