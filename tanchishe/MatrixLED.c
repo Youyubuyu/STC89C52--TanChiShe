@@ -49,12 +49,3 @@ void MatrixLED_ShowColumn(unsigned char Column, Data)
 	Delay(1);
 	MATRIX_LED_PORT=0xFF;
 }
-
-
-void MatrixLED_ShowMove(unsigned char Column, Data)
-{
-	_74HC595_WriteByte(Data);
-	MATRIX_LED_PORT=(Column);
-	Delay(1);
-	MATRIX_LED_PORT=0xFF;
-}

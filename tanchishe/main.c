@@ -6,9 +6,9 @@
 #include "Timer0.h"
 
 unsigned char Direction,Length,KeyNum,Speed,Score;
-char Snake_x[16] = {0};//蛇身x坐标,理想状态是64，但单片机RAM不够，所以少设一些
-char Snake_y[16] = {0};//蛇身y坐标
-unsigned char code x[] = {0x7f,0xbf,0xdf,0xef,0xf7,0xfb,0xfd,0xfe};
+char Snake_x[16];//蛇身x坐标,理想状态是64，但单片机RAM不够，所以少设一些
+char Snake_y[16];//蛇身y坐标
+unsigned char code x[] = {0,1,2,3,4,5,6,7};
 unsigned char code y[] = {0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
 unsigned char Food_x;//食物x坐标
 unsigned char Food_y;//食物y坐标
@@ -135,10 +135,10 @@ void Refresh() //刷新蛇和食物的位置
 	for(i = 0;i < Length;i++)
 		{
 			MatrixLED_Init();
-			MatrixLED_ShowMove(x[Snake_x[i]],y[Snake_y[i]]);
+			MatrixLED_ShowColumn(x[Snake_x[i]],y[Snake_y[i]]);
 		}
 			MatrixLED_Init();
-			MatrixLED_ShowMove(x[Food_x],y[Food_y]);
+			MatrixLED_ShowColumn(x[Food_x],y[Food_y]);
 }
 
 
@@ -305,7 +305,7 @@ void Routine_Timer0() interrupt 1
 			{
 				T0_Count3 = 0;		
 				Food_coordinate();
-				MatrixLED_ShowMove(x[Food_x],y[Food_y]);		
+				MatrixLED_ShowColumn(x[Food_x],y[Food_y]);		
 			}
 		}
 	}	

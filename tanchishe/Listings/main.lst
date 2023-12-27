@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   MAIN                                                                  12/27/2023 14:51:53 PAGE 1   
+C51 COMPILER V9.54   MAIN                                                                  12/27/2023 17:13:54 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
@@ -16,9 +16,9 @@ line level    source
    6          #include "Timer0.h"
    7          
    8          unsigned char Direction,Length,KeyNum,Speed,Score;
-   9          char Snake_x[16] = {0};//蛇身x坐标,理想状态是64，但单片机RAM不够，所以少设一些
-  10          char Snake_y[16] = {0};//蛇身y坐标
-  11          unsigned char code x[] = {0x7f,0xbf,0xdf,0xef,0xf7,0xfb,0xfd,0xfe};
+   9          char Snake_x[16];//蛇身x坐标,理想状态是64，但单片机RAM不够，所以少设一些
+  10          char Snake_y[16];//蛇身y坐标
+  11          unsigned char code x[] = {0,1,2,3,4,5,6,7};
   12          unsigned char code y[] = {0x80,0x40,0x20,0x10,0x08,0x04,0x02,0x01};
   13          unsigned char Food_x;//食物x坐标
   14          unsigned char Food_y;//食物y坐标
@@ -62,7 +62,7 @@ line level    source
   52   1      0x40,0x20,0x1F,0x20,0x40,0x00,0x22,0x00,
   53   1      0x22,0x41,0x49,0x49,0x36,0x00,0xFF,0x00,
   54   1      0x7F,0x49,0x49,0x41,0x00,0x7F,0x20,0x1C,
-C51 COMPILER V9.54   MAIN                                                                  12/27/2023 14:51:53 PAGE 2   
+C51 COMPILER V9.54   MAIN                                                                  12/27/2023 17:13:54 PAGE 2   
 
   55   1      0x02,0x7F,0x00,0x40,0x40,0x7F,0x40,0x40,
   56   1      0x00,0x7F,0x49,0x49,0x41,0x00,0x7F,0x48,
@@ -126,7 +126,7 @@ line level    source
  114   1        {
  115   2          switch(KeyNum){
  116   3            case 1:if(Direction != 1)Direction = 2;break;//如果方向不是上，也就是方向为左或右，那么朝下
-C51 COMPILER V9.54   MAIN                                                                  12/27/2023 14:51:53 PAGE 3   
+C51 COMPILER V9.54   MAIN                                                                  12/27/2023 17:13:54 PAGE 3   
 
  117   3            case 2:if(Direction != 2)Direction = 1;break;//同上
  118   3            case 3:if(Direction != 3)Direction = 4;break;//同上
@@ -149,10 +149,10 @@ line level    source
  135   1        for(i = 0;i < Length;i++)
  136   1          {
  137   2            MatrixLED_Init();
- 138   2            MatrixLED_ShowMove(x[Snake_x[i]],y[Snake_y[i]]);
+ 138   2            MatrixLED_ShowColumn(x[Snake_x[i]],y[Snake_y[i]]);
  139   2          }
  140   1            MatrixLED_Init();
- 141   1            MatrixLED_ShowMove(x[Food_x],y[Food_y]);
+ 141   1            MatrixLED_ShowColumn(x[Food_x],y[Food_y]);
  142   1      }
  143          
  144          
@@ -190,7 +190,7 @@ line level    source
  176   2          for(i = 0;i < 8;i++)
  177   2          {
  178   3            MatrixLED_ShowColumn(i,Animation[i + Offset]);
-C51 COMPILER V9.54   MAIN                                                                  12/27/2023 14:51:53 PAGE 4   
+C51 COMPILER V9.54   MAIN                                                                  12/27/2023 17:13:54 PAGE 4   
 
  179   3          }
  180   2          Count++;
@@ -254,7 +254,7 @@ line level    source
  238   2            Refresh();
  239   2            Eat_food();
  240   2            Snake_death();
-C51 COMPILER V9.54   MAIN                                                                  12/27/2023 14:51:53 PAGE 5   
+C51 COMPILER V9.54   MAIN                                                                  12/27/2023 17:13:54 PAGE 5   
 
  241   2        }
  242   1        while(Independent_Key() == 2) //普通模式
@@ -318,14 +318,14 @@ line level    source
  300   1          //娱乐模式食物刷新
  301   1          if(Independent_Key() == 4)
  302   1          {
-C51 COMPILER V9.54   MAIN                                                                  12/27/2023 14:51:53 PAGE 6   
+C51 COMPILER V9.54   MAIN                                                                  12/27/2023 17:13:54 PAGE 6   
 
  303   2            T0_Count3++;
  304   2            if(T0_Count3 == 5000)
  305   2            {
  306   3              T0_Count3 = 0;    
  307   3              Food_coordinate();
- 308   3              MatrixLED_ShowMove(x[Food_x],y[Food_y]);    
+ 308   3              MatrixLED_ShowColumn(x[Food_x],y[Food_y]);    
  309   3            }
  310   2          }
  311   1        } 
